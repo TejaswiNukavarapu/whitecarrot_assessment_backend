@@ -14,17 +14,13 @@ async function start() {
   await connectDb();
 
   const app = express();
-  const allowedOrigins = [env.clientUrl, 'http://localhost:5173', 'http://localhost:8083'];
+  
+
   app.use(cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: true, 
     credentials: true
   }));
+  
   app.use(express.json());
   app.use(cookieParser());
   app.use(morgan('dev'));
@@ -47,4 +43,3 @@ start().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-
